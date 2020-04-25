@@ -99,4 +99,32 @@ def text(string):
         return string
     else:
         str(string)
+
+'''
+crear wordcloud
+parametros: columna a crear wordcloud, titulo de la imagen, numero de palabras en la imagen
+'''
+def create_WC(data, title, words=25, _filter=True):
+    
+    if _filter:
+            text_filter=data.apply(fj.text)
+    else:
+        text_filter = data
+
+    
+    StopWords = set(stopwords.words('english'))
+
+    text_nlp = ' '.join(text_filter)
+    wordcloud = WordCloud(background_color='white',
+        stopwords=StopWords,
+        max_words=words,
+        max_font_size=200, 
+        scale=3,
+        random_state=3).generate(str(text_nlp))
+    wordcloud.recolor(random_state=1)
+    plt.figure(figsize=(20, 15))
+    plt.title(title, fontsize=25,color='black')
+    plt.imshow(wordcloud)
+    plt.axis('off')
+    plt.show()
         
